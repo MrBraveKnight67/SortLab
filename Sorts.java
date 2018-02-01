@@ -2,9 +2,11 @@ import java.util.*;
 
 public class Sorts{
     private long steps;
+    private long srchSteps;
     
     public Sorts(){
         steps = 0;
+        srchSteps = 0;
     }
 
     public void bubbleSort(ArrayList <Integer> list){
@@ -106,6 +108,34 @@ public class Sorts{
             list.set(m, helper.get(l));
             m++;
         }
+    }
+    
+    private int seqSearch(ArrayList <Integer> list, int n){
+        for(int i = 0; i < list.size(); i++){
+            srchSteps++;
+            if(list.get(i) == n){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    private int binSearch(ArrayList <Integer> list, int n){
+        int first = 0;
+        int last = list.size()-1;
+        int mid;
+        while(last > first){
+            mid = (first+last)/2;
+            if(list.get(mid) > n){
+                last = mid - 1;
+            }else if(list.get(mid) < n){
+                first = mid + 1;
+            }else{
+                return mid;
+            }
+            srchSteps += 2;
+        }
+        return -1;
     }
 
     public long getStepCount(){

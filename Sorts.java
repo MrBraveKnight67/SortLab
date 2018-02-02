@@ -3,7 +3,7 @@ import java.util.*;
 public class Sorts{
     private long steps;
     private long srchSteps;
-    
+
     public Sorts(){
         steps = 0;
         srchSteps = 0;
@@ -56,7 +56,7 @@ public class Sorts{
         for (int outer = 1; outer < list.size(); outer++){
             int position = outer;
             int key = list.get(position);
-            
+
             while (position > 0 && list.get(position - 1) > key){
                 list.set(position, list.get(position - 1));
                 position--;
@@ -109,31 +109,35 @@ public class Sorts{
             m++;
         }
     }
-    
-    private int seqSearch(ArrayList <Integer> list, int n){
+
+    public int seqSearch(ArrayList <Integer> list, int n){
         for(int i = 0; i < list.size(); i++){
             srchSteps++;
             if(list.get(i) == n){
+                System.out.println("Found " + n + " at position " + i);
                 return i;
             }
         }
         return -1;
     }
-    
-    private int binSearch(ArrayList <Integer> list, int n){
+
+    public int binSearch(ArrayList <Integer> list, int n){
         int first = 0;
         int last = list.size()-1;
         int mid;
         while(last > first){
             mid = (first+last)/2;
-            if(list.get(mid) > n){
+            if(list.get(mid) >= n){
+                if(list.get(mid) == n){
+                System.out.println("Found " + n + " at position " + mid);
+                    return mid;
+                }
+                srchSteps++;
                 last = mid - 1;
-            }else if(list.get(mid) < n){
-                first = mid + 1;
             }else{
-                return mid;
+                first = mid + 1;
             }
-            srchSteps += 2;
+            srchSteps++;
         }
         return -1;
     }
@@ -142,7 +146,16 @@ public class Sorts{
         return steps;
     }
 
+    public long getSrchCount(){
+        return srchSteps;
+    }
+
     public void setStepCount(long stepCount){
         steps = stepCount;
+    }
+
+    public void resetCounts(){
+        steps = 0;
+        srchSteps = 0;
     }
 }
